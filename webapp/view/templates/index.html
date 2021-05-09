@@ -1,0 +1,50 @@
+{% extends "_base.html" %}
+
+{% block table %}
+
+<div class="page-content">
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title m-b-0">Таблица "{{name_table}}"</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-primary">
+                            <tr>
+                                <th> <label class="customcheckbox m-b-20"> <input type="checkbox" id="mainCheckbox"> <span class="checkmark"></span> </label> </th>
+                                {% for header in headers %}
+                                <th scope="col">{{header}}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody class="customtable">
+                        {% for row in data %}
+                            <tr>
+                                <th> <label class="customcheckbox"> <input type="checkbox" class="listCheckbox"> <span class="checkmark"></span> </label> </th>
+                                {% for cell in row %}
+                                <td>{{cell}}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ <ul class="pagination flex-wrap justify-content-center">
+       {% for link in links %}
+          <li class="page-item">
+            <a class="page-link" href="/view/{{name_table}}?page={{link+1}}">{{link+1}}</a>
+          </li>
+        {% endfor %}
+      </ul>
+
+</div>
+{% endblock %}
