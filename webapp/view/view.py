@@ -41,7 +41,7 @@ def page_render(name_table="undefined"):
             data = cur.fetchall()
             headers = [description[0] for description in cur.description]
 
-            for i in range(math.ceil(len(data) / 5)):
+            for i in range(math.ceil(len(data) / 10)):
                 links.append(i)
 
             links = links[:2] + links[page - 1: page + 1] + links[-2:]
@@ -51,12 +51,13 @@ def page_render(name_table="undefined"):
                 if l not in unique_links:
                     unique_links.append(l)
             links = unique_links
-            data = data[(page - 1) * 5:page * 5]
+            data = data[(page - 1) * 10:page * 10]
 
         except sqlite3.Error as e:
             print('Ошибка чтения данных из БД: ' + str(e))
 
-    return render_template('index.html',
+    return render_template('view_table.html',
+                           module_name="Просмотр",
                            name_table=name_table,
                            headers=headers,
                            data=data,

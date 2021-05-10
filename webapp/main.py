@@ -1,17 +1,21 @@
 from webapp.DBHandler import DBHandler
 import sqlite3 as sq
-from flask import Flask, render_template, g
 import os
+from flask import Flask, render_template, g, flash, url_for, request
+from werkzeug.utils import redirect
+
 from webapp.view.view import view
 from webapp.edit.edit import edit
 
 # Конфигурация
-DATABASE = 'WMS.db'
+DATABASE = 'webapp/WMS.db'
 DEBUG = True
 SECRET_KEY = "tevirp12as"
 
 app = Flask(__name__)
 app.config.from_object(__name__)
+app.config['SECRET KEY'] = 'tevirp12'
+
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'WMS.db')))
 
 app.register_blueprint(view, url_prefix='/view')
@@ -55,4 +59,17 @@ def main_page_render():
     tables = dbase.getTables()
     table_menu = [name[1] for name in tables[1:len(tables)]]
     return render_template("_base.html",
-                           table_menu=table_menu)
+                           table_menu=table_menu,
+                           module_name="Система")
+
+
+@app.route('/update', methods=['GET', 'POST'])
+def update():
+    if request.method == 'POST':
+        name_table = request.form.get('name_table')
+        isSuccessfully = dbase.update_data(name_table)
+        if isSuccessfully:
+            flash("Редактирование прошло успешно!")
+        else:
+            flash("Ошибка записи!")
+        return redirect(url_for('edit.edit_page_render', name_table=name_table))
