@@ -60,15 +60,15 @@ def main_page_render():
     table_menu = [name[1] for name in tables[1:len(tables)]]
     return render_template("_base.html",
                            table_menu=table_menu,
-                           module_name="Система")
+                           module_name=request.endpoint)
 
 
 @app.route('/update', methods=['GET', 'POST'])
 def update():
     if request.method == 'POST':
         name_table = request.form.get('name_table')
-        isSuccessfully = dbase.update_data(name_table)
-        if isSuccessfully:
+        is_successfully = dbase.update_data(name_table)
+        if is_successfully:
             flash("Редактирование прошло успешно!")
         else:
             flash("Ошибка записи!")

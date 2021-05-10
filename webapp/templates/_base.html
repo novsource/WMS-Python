@@ -25,22 +25,20 @@
     
         <ul class="nav flex-column mb-0">
         <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Таблицы</p>
-    
-        {% for table in table_menu %}
+
         <li class="nav-item">
-            <a href="/view/{{table}}" class="nav-link text-dark font-italic">
+            <a href="/view/table_min_max" class="nav-link text-dark font-italic">
                     <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
-                    Таблица "{{table}}"
+                    Таблица "Минимумы и максимумы хранимого товара"
                 </a>
         </li>
-        {% endfor %}
         </ul>
     
         <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0">Редактирование</p>
     
         <ul class="nav flex-column mb-0">
         <li class="nav-item">
-            {% if url_table == None %}
+            {% if module_name == "Система" %}
             <a href="#" style="pointer-events: none; cursor: default;" class="nav-link text-dark font-italic">
                     <i class="fa fa-area-chart mr-3 text-primary fa-fw"></i>
                     Редактировать таблицу

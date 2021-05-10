@@ -3,6 +3,8 @@ import sqlite3
 
 from flask import Blueprint, render_template, g, request
 
+from webapp.DBHandler import DBHandler
+
 view = Blueprint('view', __name__, template_folder='templates', static_folder='static')
 
 db = None
@@ -24,22 +26,18 @@ def teardown_request(request):
 @view.route('/<name_table>/', methods=['GET', 'POST'])
 def page_render(name_table="undefined"):
 
-    if request.method == "POST":
-        print(request.form.getlist('checkbox'))
-        return 'Done'
-
     page = int(request.args.get('page', 1))
     links = []
 
     data = []
-    headers = []
 
     if db:
         try:
-            cur = db.cursor()
-            cur.execute(f'''SELECT * FROM {name_table}''')
-            data = cur.fetchall()
-            headers = [description[0] for description in cur.description]
+            dbase = DBHandler(db)
+            if name_table != "table_min_max":
+                data = dbase.get_data_from_table(name_table)
+            else:
+                data = dbase.view_min_max_items()
 
             for i in range(math.ceil(len(data) / 10)):
                 links.append(i)
@@ -59,6 +57,6 @@ def page_render(name_table="undefined"):
     return render_template('view_table.html',
                            module_name="Просмотр",
                            name_table=name_table,
-                           headers=headers,
+                           headers=dbase.headers,
                            data=data,
                            links=links)

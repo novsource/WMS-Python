@@ -15,7 +15,6 @@
                     <table class="table table-hover">
                         <thead class="table-primary">
                             <tr>
-                                <th> <label class="customcheckbox m-b-20"> <input type="checkbox" id="mainCheckbox"> <span class="checkmark"></span> </label> </th>
                                 {% for header in headers %}
                                 <th scope="col">{{header}}</th>
                                 {% endfor %}
@@ -24,7 +23,6 @@
                         <tbody class="customtable">
                         {% for row in data %}
                             <tr>
-                                <th> <label class="customcheckbox"> <input type="checkbox" value="{{row[0]}}" class="listCheckbox"> <span class="checkmark"></span> </label> </th>
                                 {% for cell in row %}
                                 <td>{{cell}}</td>
                                 {% endfor %}

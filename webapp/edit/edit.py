@@ -57,10 +57,3 @@ def edit_page_render(name_table='undefined'):
                            data=data,
                            data_len=len(data),
                            links=links)
-
-
-@edit.route('/update', methods=['GET', 'POST'])
-def update():
-    if request.method == 'POST':
-        print('ЗДЕСЬ')
-
