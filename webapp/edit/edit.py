@@ -2,6 +2,8 @@ from flask import Flask, Blueprint, render_template, g, request, flash, url_for
 import sqlite3
 import math
 
+from webapp.DBHandler import DBHandler
+
 edit = Blueprint('edit', __name__, template_folder="templates", static_folder="static")
 
 db = None
@@ -25,15 +27,20 @@ def edit_page_render(name_table='undefined'):
     page = int(request.args.get('page', 1))
     links = []
 
-    data = []
     headers = []
+
+    data = []
 
     if db:
         try:
-            cur = db.cursor()
-            cur.execute(f'''SELECT * FROM {name_table}''')
-            data = cur.fetchall()
-            headers = [description[0] for description in cur.description]
+            dbase = DBHandler(db)
+            if name_table != 'Минимумы и максимумы хранимого товара':
+                data = dbase.get_data_from_table(name_table)
+            else:
+                data = dbase.view_min_max_items()
+
+            headers = data['headers']
+            data = data['data']
 
             for i in range(math.ceil(len(data) / 10)):
                 links.append(i)
@@ -56,4 +63,5 @@ def edit_page_render(name_table='undefined'):
                            headers=headers,
                            data=data,
                            data_len=len(data),
-                           links=links)
+                           links=links,
+                           count=0)

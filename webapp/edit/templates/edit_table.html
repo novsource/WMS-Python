@@ -42,7 +42,7 @@
                                 </td>
                             </tr>
                         </tbody>
-                        <!-- Modal Edit Employee-->
+                        <!-- Модальное окно редактирования элемента таблицы-->
                         <div id="modaledit{{row[0]}}" class="modal fade" role="dialog">
                             <div class="modal-dialog">
                             <div class="modal-content">
@@ -54,7 +54,11 @@
                                 {% for header in headers %}
                              <div class="form-group">
                               <label>{{header}}:</label>
-                              <input type="text" class="form-control" name="{{header}}" value="{{row[0]}}">
+                                 {% if headers.index(header) != None %}
+                                    <input type="text" class="form-control" name="{{header}}" value="{{row[headers.index(header)]}}">
+                                 {% else %}
+                                    <input type="text" class="form-control" name="{{header}}" value="" placeholder="Нет значения">
+                                 {% endif %}
                              </div>
                                 {% endfor %}
                              <div class="form-group">

@@ -29,6 +29,8 @@ def page_render(name_table="undefined"):
     page = int(request.args.get('page', 1))
     links = []
 
+    headers = []
+
     data = []
 
     if db:
@@ -38,6 +40,10 @@ def page_render(name_table="undefined"):
                 data = dbase.get_data_from_table(name_table)
             else:
                 data = dbase.view_min_max_items()
+                name_table = "Минимумы и максимумы хранимого товара"
+
+            headers = data['headers']
+            data = data['data']
 
             for i in range(math.ceil(len(data) / 10)):
                 links.append(i)
@@ -57,6 +63,6 @@ def page_render(name_table="undefined"):
     return render_template('view_table.html',
                            module_name="Просмотр",
                            name_table=name_table,
-                           headers=dbase.headers,
+                           headers=headers,
                            data=data,
                            links=links)
