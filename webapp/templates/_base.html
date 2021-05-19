@@ -29,16 +29,16 @@
                 <div class="nav_list">
                     <div class="dropdown-menu-toggle">
                         <a href="/view/table_min_max" class="nav_link active" id="drop-menu-item">
-                            <i class='bx bx-grid-alt nav_icon'></i>
+                            <i class='bx bx-table nav_icon'></i>
                             <span class="nav_name">Просмотр таблиц</span>
                         </a>
                     </div>
                     <a href="/edit/{{name_table}}" class="nav_link">
-                        <i class='bx bx-user nav_icon'></i>
+                        <i class='bx bx-edit nav-icon'></i>
                         <span class="nav_name">Редактировать таблицу</span>
                     </a>
                     <a href="#" class="nav_link" data-bs-toggle="modal" data-bs-target="#modal-analysis">
-                        <i class='bx bx-message-square-detail nav_icon'></i>
+                        <i class='bx bx-analyse nav_icon'></i>
                         <span class="nav_name">Анализ границ товара</span>
                     </a>
                 </div>
@@ -76,8 +76,10 @@
         <form action="{{url_for('analysis_per')}}" method="POST">
             <input type="hidden"  name="name_table" value="{{name_table}}">
             <div class="form-group">
-                <label>Период:</label>
-                <input type="text" class="form-control" name="analysis_per" placeholder="Введите период в формате: ДД.ММ.ГГ" value="">
+                <label>Начальная дата периода:</label>
+                <input type="text" class="form-control" name="analysis_start_date" placeholder="Введите период в формате: ГГГГ-ММ-ДД" value="">
+                 <label>Последняя дата периода:</label>
+                <input type="text" class="form-control" name="analysis_end_date" placeholder="Введите период в формате: ГГГГ-ММ-ДД" value="">
             </div>
             <div class="form-group">
                 <button class="btn btn-primary" type="submit">Начать анализ</button>

@@ -38,7 +38,9 @@
                                 <td id="edit_cell">{{cell}}</td>
                                 {% endfor %}
                                 <td>
-                                    <a href="/update/{{row[0]}}" class="btn btn-primary btn-xs" data-bs-toggle="modal" data-bs-target="#modaledit{{row[0]}}">Редактировать</a>
+                                    <a href="/update/{{row[0]}}" data-bs-toggle="modal" data-bs-target="#modaledit{{row[0]}}">
+                                        <i class='bx bx-edit'></i>
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
@@ -61,9 +63,9 @@
                                  {% endif %}
                              </div>
                                 {% endfor %}
-                             <div class="form-group">
-                                 <button class="btn btn-primary" type="submit">Подтвердить изменения</button>
-                            </div>
+                                 <div class="form-group">
+                                    <button class="btn btn-primary" type="submit">Подтвердить изменения</button>
+                                 </div>
                             </form>
                             </div>
                             <div class="modal-footer">

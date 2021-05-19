@@ -24,7 +24,7 @@ def teardown_request(request):
 
 
 @view.route('/<name_table>/', methods=['GET', 'POST'])
-def page_render(name_table="undefined"):
+def view_page_render(name_table="undefined"):
 
     page = int(request.args.get('page', 1))
     links = []
@@ -40,7 +40,6 @@ def page_render(name_table="undefined"):
                 data = dbase.get_data_from_table(name_table)
             else:
                 data = dbase.view_min_max_items()
-                name_table = "Минимумы и максимумы хранимого товара"
 
             headers = data['headers']
             data = data['data']

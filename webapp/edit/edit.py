@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, render_template, g, request, flash, url_for
+from flask import Blueprint, render_template, g, request, flash, url_for
 import sqlite3
 import math
 
@@ -34,7 +34,7 @@ def edit_page_render(name_table='undefined'):
     if db:
         try:
             dbase = DBHandler(db)
-            if name_table != 'Минимумы и максимумы хранимого товара':
+            if name_table != 'table_min_max':
                 data = dbase.get_data_from_table(name_table)
             else:
                 data = dbase.view_min_max_items()

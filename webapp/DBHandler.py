@@ -2,7 +2,6 @@ from flask import request
 
 
 class DBHandler:
-
     data_from_db = {}
 
     def __init__(self, db):
@@ -23,7 +22,7 @@ class DBHandler:
 
     def update_data(self, name_table):
         try:
-            if name_table == 'Минимумы и максимумы хранимого товара':
+            if name_table == 'table_min_max':
                 item_id = int(request.form.get("item_id"))
                 item_name = request.form.get("item_name")
                 item_cost = float(request.form.get("item_cost"))
@@ -33,12 +32,10 @@ class DBHandler:
 
                 self.__cursor.execute(sql)
 
-                self.headers = [description[0] for description in self.__cursor.description]
-
                 self.__db.commit()
                 return True
         except:
-            print('Ошибка записи в БД')
+            print('Ошибка обновления записи в БД')
             return False
 
     def get_data_from_table(self, name_table):
@@ -85,3 +82,23 @@ class DBHandler:
         except:
             print("Ошибка чтения из БД")
             return []
+
+    def get_info_about_sell_from_period(self, start_date, end_date):
+        sql = f''' SELECT item_storage_id, item_name, manufacturer_name, sell_date, item_min_count, item_max_count, sell_count 
+                    FROM Item_Sell 
+                    JOIN Items ON Items.item_id = (SELECT item_id FROM Item_Storage WHERE item_storage_id = Item_Sell.item_storage_id)
+                    JOIN Manufacturer ON Manufacturer.manufacturer_id = (SELECT manufacturer_id FROM Item_Storage WHERE item_storage_id = Item_Sell.item_storage_id)
+                    JOIN Criteria ON Criteria.item_id = (SELECT item_id FROM Item_Storage WHERE item_storage_id = Item_Sell.item_storage_id) 
+                    WHERE strftime('%s', sell_date) BETWEEN strftime('%s', "{start_date}") AND strftime('%s', "{end_date}") '''
+        try:
+            self.__cursor.execute(sql)
+            res = self.__cursor.fetchall()
+
+            headers = [description[0] for description in self.__cursor.description]
+
+            if res:
+                self.data_from_db["sell"] = {"headers": headers, "data": res}
+                return self.data_from_db.get("sell")
+        except:
+            print("Error")
+            return None

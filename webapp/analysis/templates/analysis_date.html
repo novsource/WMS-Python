@@ -1,7 +1,96 @@
-{% extend "_base.html" %}
+{% extends "_base.html" %}
 
 {% block table %}
 
+<div class="page-content">
 
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <span class="badge  bg-primary">Включен режим анализа</span>
+                <div class="card-body text-center">
+                    <h5 class="card-title m-b-0">Результаты анализа"</h5>
+                </div>
+                <div class="table-responsive">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            {{message}}
+                            <div class="alert alert-success alert-dismissable" role="alert">
+                                    <span type="button" class="close" data-bs-dismiss="alert" aria-label="close" aria-hidden="true">&times;</span>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                    <table class="table table-hover">
+                        <thead class="table-primary">
+                            <tr>
+                                {% for header in headers %}
+                                <th scope="col">{{header}}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody class="customtable">
+                        {% for row in data %}
+                            <tr>
+                                {% for cell in row %}
+                                <td id="edit_cell">{{cell}}</td>
+                                {% endfor %}
+                                <td>
+                                    <a href="/update/{{row[0]}}" data-bs-toggle="modal" data-bs-target="#modaledit{{row[0]}}">
+                                        <i class='bx bx-edit'></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <!-- Модальное окно редактирования элемента таблицы-->
+                        <div id="modaledit{{row[0]}}" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                           <div class="modal-header"><h4 class="modal-title">Редактирование строки</h4></div>
+                            <div class="modal-body">
+                            <form action="{{url_for('update')}}" method="POST">
+                                <input type="hidden"  name="name_table" value="{{name_table}}">
+                                <input type="hidden"  name="{{headers[0]}}" value="{{row[0]}}">
+                                {% for header in headers %}
+                             <div class="form-group">
+                              <label>{{header}}:</label>
+                                 {% if headers.index(header) != None %}
+                                    <input type="text" class="form-control" name="{{header}}" value="{{row[headers.index(header)]}}">
+                                 {% else %}
+                                    <input type="text" class="form-control" name="{{header}}" value="" placeholder="Нет значения">
+                                 {% endif %}
+                             </div>
+                                {% endfor %}
+                                 <div class="form-group">
+                                    <button class="btn btn-primary" type="submit">Подтвердить изменения</button>
+                                 </div>
+                            </form>
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть окно</button>
+                            </div>
+                          </div>
+                          </div>
+                         </div>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+ <ul class="pagination flex-wrap justify-content-center">
+       {% for link in links %}
+          <li class="page-item">
+            <a class="page-link" href="/analysis/result/{{start_date}}/{{end_date}}?page={{link+1}}">{{link+1}}</a>
+          </li>
+        {% endfor %}
+      </ul>
+
+</div>
 
 {% endblock %}
