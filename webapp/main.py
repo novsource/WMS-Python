@@ -80,8 +80,12 @@ def update():
 @app.route('/analysis_period', methods=['GET', 'POST'])
 def analysis_per():
     if request.method == 'POST':
+
         start_date = request.form.get('analysis_start_date')
         end_date = request.form.get('analysis_end_date')
+        period = request.form.get('sort_analysis')
+
         return redirect(url_for('analysis.analysis_result_page_render',
                                 start_date=start_date,
-                                end_date=end_date))
+                                end_date=end_date,
+                                period=period))

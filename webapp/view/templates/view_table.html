@@ -16,15 +16,15 @@
                         <thead class="table-primary">
                             <tr>
                                 {% for header in headers %}
-                                <th scope="col">{{header}}</th>
+                                <th scope="col" name="header_title">{{header}}</th>
                                 {% endfor %}
                             </tr>
                         </thead>
                         <tbody class="customtable">
                         {% for row in data %}
-                            <tr>
+                            <tr id="view_row">
                                 {% for cell in row %}
-                                <td>{{cell}}</td>
+                                <td id="view_cell">{{cell}}</td>
                                 {% endfor %}
                             </tr>
                         {% endfor %}

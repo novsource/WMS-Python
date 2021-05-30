@@ -28,16 +28,16 @@
                 </a>
                 <div class="nav_list">
                     <div class="dropdown-menu-toggle">
-                        <a href="/view/table_min_max" class="nav_link active" id="drop-menu-item">
+                        <a href="/view/table_min_max" id="link-to-view-module" class="nav_link active">
                             <i class='bx bx-table nav_icon'></i>
                             <span class="nav_name">Просмотр таблиц</span>
                         </a>
                     </div>
-                    <a href="/edit/{{name_table}}" class="nav_link">
+                    <a href="/edit/{{name_table}}" id="link-to-edit-module" class="nav_link">
                         <i class='bx bx-edit nav-icon'></i>
                         <span class="nav_name">Редактировать таблицу</span>
                     </a>
-                    <a href="#" class="nav_link" data-bs-toggle="modal" data-bs-target="#modal-analysis">
+                    <a href="#" class="nav_link" id="link-to-analysis-module" data-bs-toggle="modal" data-bs-target="#modal-analysis">
                         <i class='bx bx-analyse nav_icon'></i>
                         <span class="nav_name">Анализ границ товара</span>
                     </a>
@@ -74,6 +74,12 @@
                 <div class="modal-header"><h4 class="modal-title">Выберите период анализа</h4></div>
     <div class="modal-body">
         <form action="{{url_for('analysis_per')}}" method="POST">
+            <div class="d-flex mb-2">
+                <select class="form-select" name="sort_analysis">
+                  <option value="week">Неделя</option>
+                  <option value="month">Месяц</option>
+                </select>
+            </div>
             <input type="hidden"  name="name_table" value="{{name_table}}">
             <div class="form-group">
                 <label>Начальная дата периода:</label>
@@ -89,6 +95,8 @@
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть окно</button>
             </div>
+    </div>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

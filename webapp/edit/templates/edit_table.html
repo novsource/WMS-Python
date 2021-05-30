@@ -33,12 +33,12 @@
                         </thead>
                         <tbody class="customtable">
                         {% for row in data %}
-                            <tr>
+                            <tr id="edit_row">
                                 {% for cell in row %}
                                 <td id="edit_cell">{{cell}}</td>
                                 {% endfor %}
                                 <td>
-                                    <a href="/update/{{row[0]}}" data-bs-toggle="modal" data-bs-target="#modaledit{{row[0]}}">
+                                    <a href="/update/{{row[0]}}" id="edit_icon" data-bs-toggle="modal" data-bs-target="#modaledit{{row[0]}}">
                                         <i class='bx bx-edit'></i>
                                     </a>
                                 </td>

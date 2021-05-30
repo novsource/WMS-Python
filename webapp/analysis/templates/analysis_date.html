@@ -10,7 +10,7 @@
             <div class="card">
                 <span class="badge  bg-primary">Включен режим анализа</span>
                 <div class="card-body text-center">
-                    <h5 class="card-title m-b-0">Результаты анализа"</h5>
+                    <h5 class="card-title m-b-0">Результаты анализа</h5>
                 </div>
                 <div class="table-responsive">
                 {% with messages = get_flashed_messages() %}
@@ -91,6 +91,13 @@
         {% endfor %}
       </ul>
 
+   <form action="{{ url_for('view.view_page_render', name_table='table_min_max') }}" method="POST">
+       <input class="btn btn-success" type="submit" name="upvote" value="Подтвердить изменения" />
+   </form>
+
+
 </div>
+
+
 
 {% endblock %}
