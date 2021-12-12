@@ -1,4 +1,4 @@
-import datetime
+from models.db_models import Item, ItemStorage, ItemManufacturer, Storage, Shop
 from flask import request
 
 
@@ -7,16 +7,11 @@ class DBHandler:
 
     def __init__(self, db):
         self.__db = db
-        self.__cursor = db.cursor()
 
     def get_tables(self):
-        sql = '''SELECT * FROM sqlite_master WHERE type="table"'''
         try:
-            self.__cursor.execute(sql)
-            res = self.__cursor.fetchall()
-            self.headers = [description[0] for description in self.__cursor.description]
-            if res:
-                return res
+            tables = self.__db.engine.table_names()[:len(self.__db.engine.table_names()) - 1]
+            return tables
         except:
             print('Ошибка чтения из БД')
         return []
@@ -24,7 +19,7 @@ class DBHandler:
     def update_data(self, name_table):
         try:
             if name_table == 'table_min_max':
-                item_id = int(request.form.get("item_id"))
+                item_id = int(request.form.get("criteria_id"))
                 item_name = request.form.get("item_name")
                 item_cost = float(request.form.get("item_cost"))
 
@@ -40,18 +35,11 @@ class DBHandler:
             return False
 
     def get_data_from_table(self, name_table):
-        sql = f'''SELECT * FROM {name_table}'''
+        info = None
         try:
-            if self.data_from_db.get(name_table) is None:
-                self.__cursor.execute(sql)
-                res = self.__cursor.fetchall()
-
-                headers = [description[0] for description in self.__cursor.description]
-
-                if res:
-                    self.data_from_db[name_table] = {"headers": headers, "data": res}
-                    return self.data_from_db.get(name_table)
-            else:
+            info = Item.query.all()
+            self.data_from_db[name_table] = info
+            if info is not None:
                 return self.data_from_db.get(name_table)
         except:
             print('Ошибка получения данных из БД')

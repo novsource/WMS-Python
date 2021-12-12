@@ -7,25 +7,9 @@ from webapp.DBHandler import DBHandler
 
 view = Blueprint('view', __name__, template_folder='templates', static_folder='static')
 
-db = None
-
-
-@view.before_request
-def before_request():
-    global db
-    db = g.get('link_db')
-
-
-@view.teardown_request
-def teardown_request(request):
-    global db
-    db = None
-    return request
-
 
 @view.route('/<name_table>/', methods=['GET', 'POST'])
 def view_page_render(name_table="undefined"):
-
     page = int(request.args.get('page', 1))
     links = []
 
@@ -33,7 +17,7 @@ def view_page_render(name_table="undefined"):
 
     data = []
 
-    if db:
+    if True:
         try:
             dbase = DBHandler(db)
             if name_table != "table_min_max":
